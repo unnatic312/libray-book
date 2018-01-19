@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<title> Index </title>
+    <meta  name="viewport" content="width=device-width initial-scale=1.0" >
+    <meta charset="utf-8" > 
+    <link rel="stylesheet" type="text/css" href="myproj1/static/index.css">
+<script type="text/javascript">
+    def change_language(lang){
+        target= getElementById(news).src;
+        if (lang==guj){
+            target = "https://www.divyabhaskar.co.in/"
+        }else{
+            target = "https://timesofindia.indiatimes.com/"
+        }
+    }
+</script>
+</head>
+
+<body>
+<header> Index Page </header>
+<h1 id="h01"> hello <sub><bdo dir=rtl>world</bdo></sub></h1>
+<hr style="border-style: double;border-color: grey">
+
+<h1>History</h1>
+<div id="history">   
+    
+    <img src="PCBhistory.jpg" alt="History" >
+    <p>
+        With over 120 years of service, Popular Inc. 
+    has been built upon strong institutional values, 
+    providing full-service financial services in the United States, 
+    Puerto Rico, the Caribbean, and Latin America.
+
+        First established in the United States in 1961, 
+    Popular Community Bank continues to grow its core banking services 
+    and operates 50 branches in three states: Florida, New Jersey and New York.
+
+    </p>
+</div>
+
+<h1>Corparate Background</h1>
+<div id="corparate">
+    
+    <img src="vol_1.jpg" alt="Corparate Values">
+    <p>
+        Founded in 1893, Popular Inc. (NASDAQ: BPOP) is the leading banking institution by both assets and deposits in Puerto Rico and ranks among the largest 50 banks in the U.S. by assets. In the United States, Popular Inc. has established a community banking franchise providing a broad range of financial services and products.
+
+    </p>
+</div>
+
+<h1>Our Values</h1>
+<div id="values">
+    
+    <img src="handshake_1.jpg" alt="Our values">
+    <p>
+        We strive to attract, develop, compensate and retain the most qualified people in a work environment characterized by discipline and leadership. 
+    </p>
+</div>
+
+<div id=form>
+    <div style="display: grid; padding: 10px;">
+        First Name <input type="text" name="firstname"> 
+        Last Name <input type="text" name="lastname"> 
+        <button id="submit" value="False" style="margin: 5px;"> Submit </button>
+    </div>
+    <div style="display: grid; padding: 10px;">
+        <iframe id="news" src="https://www.divyabhaskar.co.in/"> News </iframe>
+        <span id ="language_selector">
+           <button id="gujrati" onclick="change_language(guj)"> Gujrati </button>
+           <button id="english" onclick="change_language(eng)"> English </button>
+        </span>
+    </div>
+    <div style="display: grid; padding: 10px;">
+        
+    </div>
+</div>
+</body>
+
+</html>

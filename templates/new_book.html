@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New_book</title>
+</head>
+<body>
+<h2>You have Successfully added new book to list.</h2>
+
+ <ul> {{ book.name }} </ul>
+        <li> Book Title   : {{ book.name }} </li>
+        <li> Written By   : {{ book.auther }} </li>
+        <li> Book Published_on   : {{ book.published_on }}</li>
+
+<a href="{% url 'index' %}" >  Go Back  </a>
+</body>
+</html>

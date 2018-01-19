@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Detail</title>
+</head>
+<body>
+    <ul> {{ book.name }} </ul>
+        <li> Book Title   : {{ book.name }} </li>
+        <li> Written By   : {{ book.auther }} </li>
+        <li> Book Published_on   : {{ book.published_on }}</li>
+
+        <a href="{% url 'index' %}" >  Go Back  </a>
+</body>
+</html>
