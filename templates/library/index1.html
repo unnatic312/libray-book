@@ -1,0 +1,57 @@
+{% extends 'library/base.html' %}
+{% block content %}
+
+    <div class="detail" >
+        <div class="detail_obj">
+            <h2>Books Available</h2>
+            {% if books %}
+                {% for book in books %}
+            <li> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{book.name }}</a>
+                <ul> 
+                    by <strong>{{book.auther}}  </strong>
+                    
+                </ul>
+            </li>
+                {% endfor %}
+            {% else %}
+                <p> No books to Display </p>
+            {% endif %}
+        </div>
+
+        <div class="detail_obj">
+            <h2 style="text-align: center;">Authers <sub> whoes books are available</sub></h2>
+           {% if authers %}
+                {% for auther in authers %}
+                    <ul> <strong><a href="{% url 'auther_detail' auther.get_absolute_url %}" >
+                                        {{auther.first_name}} {{auther.last_name}}
+                            </a></strong>
+
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <p> No Authers to Display </p>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+        <form action="{% url 'book_add' %}" method="POST">
+
+            {% csrf_token %}
+
+            <div id="book_add" style="display:grid; width:350px; padding:20px">
+                Book Name : <input type="text" name="book_name"/>
+                Book Auther : <input type="text" name="book_auther"/>
+                Book Published On : <input type="date" name="book_published"/>
+                Book Publication :<inline>
+                {% for publication in publication_list %} 
+                    <input type="checkbox" name="publication" value=publication/>{{publication}}
+
+                {% endfor %}</inline>
+                <input type="submit" value="add"/>
+            </div>
+        </form>
+{% endblock %}
+

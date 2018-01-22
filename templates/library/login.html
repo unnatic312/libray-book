@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="login" >
+    <form action="index/" method="post" accept-charset="utf-8">
+
+    		{{ csrf_token }}
+    		{{ form }}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+      <input type="submit" name="submit"> Submit </input>
+  
+    </form>
+        
+    </div>
+</body>
+</html>
+<!--
+ <div>	
+ 	<table>
+ 		<caption>Login</caption>
+ 		<tbody>
+ 			<tr>
+ 				<th>E-mail</th>
+ 				<td><input type="email" name="user_id" help-text="Enter E-mail Id"></td>
+ 			</tr>
+ 		    <tr>
+ 				<th>Password</th>
+ 				<td><input type="password" name="user_password" help-text="Password should be min"></td>
+ 			</tr>
+ 			
+ 		</tbody>
+ 	</table>
+    </div>
+    <div> 
+    -->

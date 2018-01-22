@@ -15,11 +15,11 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import book_add ,book_detail,new_book
-from django.shortcuts import render
-import library
+from .views import book_add ,new_book
+from library.views import book_detail
+
 urlpatterns = [
-    path('<slug:book_name>/',book_detail,name='book_detail'),
-    path('book_add/', book_add , name='book_add'),
-    path('new_book/', new_book , name='new_book'),
+    path('<slug:book_name>/',book_detail.as_view(),name='book_detail'),
+    path('book_add/', book_add.as_view() , name='book_add'),
+    path('new_book/', new_book.as_view() , name='new_book'),
 ]

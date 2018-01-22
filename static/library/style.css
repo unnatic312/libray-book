@@ -1,0 +1,40 @@
+{% load static %}
+
+.detail{
+    background-color: transparent;
+    display: flex; 
+    padding: 20px; 
+    margin: 20px; 
+	}
+
+.detail_obj{
+	width: 50%;
+	}
+
+#base_body{
+	background-blend-mode: color-dodge;
+	background-color: lavenderblush;
+	}
+
+header{
+	display: block; 
+	width: 100%; 
+    height: 80px; 
+    background-color: darkseagreen; 
+    text-align: center; 
+	}
+
+#base_content{
+	display: grid;
+	object-position: inherit;
+	}
+
+h1,h2,p{
+	text-align:center; 
+	}
+
+#login{
+	display:flex;
+	background-color: darkseagreen;
+	align-items: center;
+}

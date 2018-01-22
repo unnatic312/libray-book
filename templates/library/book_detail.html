@@ -1,0 +1,23 @@
+
+{% extends 'library/base.html' %}
+{% block content %}
+    <div class="detail">
+        <div class="detail_obj">
+            <h2>{{ book.name }}</h2>
+        <li><strong> Book Title   :</strong>   {{ book.name }}. <br></li>
+        <li><strong> Written By   :</strong>   {{ book.auther }}. <br></li>
+        <li><strong> Book Published_on   :</strong>   {{ book.published_on }}. <br></li>
+        </div>
+        <div class="detail_obj">
+            <strong> Publications   :</strong>
+                <ul>
+                {% for publication in book.publication.all%}
+                <li> {{publication.name}} </li>
+                {% endfor %}
+                </ul>
+        </div>
+    </div>
+   
+    
+        <a href="{% url 'index' %}" >  Go Back  </a>
+{% endblock %}
