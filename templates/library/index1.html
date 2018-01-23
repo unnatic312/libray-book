@@ -34,24 +34,6 @@
         </div>
     </div>
     <hr>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-
-        <form action="{% url 'book_add' %}" method="POST">
-
-            {% csrf_token %}
-
-            <div id="book_add" style="display:grid; width:350px; padding:20px">
-                Book Name : <input type="text" name="book_name"/>
-                Book Auther : <input type="text" name="book_auther"/>
-                Book Published On : <input type="date" name="book_published"/>
-                Book Publication :<inline>
-                {% for publication in publication_list %} 
-                    <input type="checkbox" name="publication" value=publication/>{{publication}}
-
-                {% endfor %}</inline>
-                <input type="submit" value="add"/>
-            </div>
-        </form>
 {% endblock %}
 

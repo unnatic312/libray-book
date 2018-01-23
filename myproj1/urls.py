@@ -15,13 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from library.views import index,login
+from library.views import index
 from library import urls
 from library.views import auther_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',login.as_view(),name='login'),
     path('index/',index.as_view(),name='index'),
     path('book/',include(urls)),
     path('auther/<slug:auther_name>/',auther_detail.as_view(),name='auther_detail'),
