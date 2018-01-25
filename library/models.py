@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class auther(models.Model):
+class Auther(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     bio = models.TextField()
@@ -13,7 +13,7 @@ class auther(models.Model):
     def get_absolute_url(self):
         return (self)
 
-class publication(models.Model):
+class Publication(models.Model):
     name = models.CharField(max_length=100)
         
     def __str__(self):
@@ -22,11 +22,11 @@ class publication(models.Model):
     def get_absolute_url(self):
         return ((self.name).replace(" ","_"))
 
-class books(models.Model):
+class Books(models.Model):
     name = models.CharField(max_length=50)
-    auther = models.ForeignKey(auther, on_delete=models.CASCADE)
+    auther = models.ForeignKey(Auther, on_delete=models.CASCADE)
     published_on = models.DateField()
-    publication = models.ManyToManyField(publication)
+    publication = models.ManyToManyField(Publication)
 
     def __str__(self):
         return self.name
@@ -34,6 +34,11 @@ class books(models.Model):
     def get_absolute_url(self):
         return ((self.name).replace(" ","_"))
 
+class BookReview(models.Model):
+    book_review = models.TextField()
+    date_on = models.DateTimeField(auto_now=True, null=True)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
 
 
-
+    def __str__(self):
+        return (self.book.name)

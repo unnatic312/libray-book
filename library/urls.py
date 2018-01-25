@@ -15,8 +15,8 @@ Including another URLconf
 """
 
 from django.urls import path
-from library.views import book_detail
+from library.views import BookDetail
 
 urlpatterns = [
-    path('<slug:book_name>/',book_detail.as_view(),name='book_detail'),
+    path('<slug:book_name>/', BookDetail.as_view(), name='book_detail'),
    ]

@@ -123,3 +123,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/myproj1/static/',
 ]
+
+# As using Django Authentication sytem
+# Overrides default path to our path
+
+LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'library/login.html'
