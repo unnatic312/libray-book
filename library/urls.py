@@ -15,8 +15,11 @@ Including another URLconf
 """
 
 from django.urls import path
-from library.views import BookDetail
+from django.contrib.auth.views import login_required
+from .views import BookDetail, AddBookView, AddBookData
 
 urlpatterns = [
-    path('<slug:book_name>/', BookDetail.as_view(), name='book_detail'),
-   ]
+    path('add_book_detail/',login_required(AddBookView.as_view()), name='add_book_detail'),
+    path('add_book_data/',login_required(AddBookData.as_view()), name='add_book_data'),
+    path('<slug:book_name>/', login_required(BookDetail.as_view()), name='book_detail'),
+    ]

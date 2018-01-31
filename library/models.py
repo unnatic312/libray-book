@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Auther(models.Model):
@@ -27,6 +27,7 @@ class Books(models.Model):
     auther = models.ForeignKey(Auther, on_delete=models.CASCADE)
     published_on = models.DateField()
     publication = models.ManyToManyField(Publication)
+    book_data  = models.FileField(blank=True,null=True)
 
     def __str__(self):
         return self.name
@@ -42,3 +43,4 @@ class BookReview(models.Model):
 
     def __str__(self):
         return (self.book.name)
+

@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -127,5 +127,7 @@ STATICFILES_DIRS = [
 # As using Django Authentication sytem
 # Overrides default path to our path
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
-LOGIN_URL = 'library/login.html'
+
+LOGOUT_URL = 'logout'

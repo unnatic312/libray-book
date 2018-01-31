@@ -1,11 +1,14 @@
-from django.shortcuts import render_to_response,render
-from django.http import Http404
+from django.shortcuts import render, reverse
+from django.contrib.auth import logout,login
+from django.http import Http404,HttpResponseRedirect
 from django.views import View
+from django.views.generic import DetailView
+from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
 
 from .models import Books, Auther, Publication, BookReview
-from .form import BookReviewForm
+from .form import BookReviewForm,AddBookDetail,AddBookData,RegisterForm
 # Create your views here.
-
 
 
 class Index(View):
@@ -14,42 +17,50 @@ class Index(View):
     publication_list = Publication.objects.order_by("name")
 
     def get(self,request):
-        form = BookReviewForm()
-        reviews = BookReview.objects.order_by('-date_on')
-        return render(request,"library\index1.html",
+       return render(request,"library\index1.html",
             context= {
                 'books':self.books_list,
                 'authers':self.authers,
                 'publication_list':self.publication_list,
-                'reviews':reviews,
-                'form':form,
-            })
+                })
 
     def post(self,request):
-        reviews = BookReview.objects.order_by('-date_on')
-        form = BookReviewForm(request.POST)
-        if form.is_valid():
-            form.save()
         return render(request, "library\index1.html",
             context={
                 'books': self.books_list,
                 'authers': self.authers,
                 'publication_list': self.publication_list,
-                'reviews': reviews,
-                'form': form,
             })
 
+
 class BookDetail(View):
+    form = BookReviewForm()
 
     def get(self,request,book_name):
-        try:
-            name = book_name.replace('_',' ')
+            try:
+                form = BookReviewForm()
+                name = book_name.replace('_',' ')
+                book = Books.objects.get(name=name)
+                reviews = BookReview.objects.filter(book=book)[:5]
+                context = {"book": book,
+                           'reviews': reviews,
+                           'form': form, }
+            except Books.DoesNotExist:
+                raise Http404('Books Does not exist')
+            return render(request,"library\\book_detail.html", context )
+
+    def post(self,request,book_name):
+            form = BookReviewForm(request.POST)
+            if form.is_valid():
+                form.save()
+            name = book_name.replace('_', ' ')
             book = Books.objects.get(name=name)
+            reviews = BookReview.objects.filter(book=book)[:5]
+            context = {"book": book,
+                       'reviews': reviews,
+                       'form': self.form, }
+            return render(request,"library\\book_detail.html", context)
 
-        except Books.DoesNotExist:
-            raise Http404('Books Does not exist')
-
-        return render_to_response("library\\book_detail.html", context= {"book":book })
 
 class AutherDetail(View):
 
@@ -64,3 +75,62 @@ class AutherDetail(View):
 
         return render(request,"library\\auther_detail.html", context= {"book_list":book_list,"auther":auther_a })
 
+
+class PublicationDetail (DetailView):
+    model = Publication
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['book_list'] = Books.objects.filter(publication='3')
+        return context
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))
+
+
+class AddBookView (FormView):
+    template_name = 'library/add_book_detail.html'
+    success_url = '/index/'
+    form_class = AddBookDetail
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class AddBookData(View):
+    def post(self,request):
+        form = AddBookData(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('index')
+        else:
+            form = AddBookData()
+            return HttpResponseRedirect('add_book_data',context={'form':form,})
+
+        return render(request,'library/add_book_data.html',context={'form':form})
+
+    def get(self, request):
+        form = AddBookData()
+        return HttpResponseRedirect('add_book_data', context={'form': form, })
+
+
+class Register(View):
+    def get(self,request):
+        form = RegisterForm()
+        return render(request,'library/register.html',context={'form':form})
+
+    def post(self,request):
+        form = RegisterForm(request.POST)
+        context = {'form': form}
+
+        if form.is_valid():
+            user = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            user = User.objects.create_user(user, email, password)
+            user.save()
+            return render(request,'library/login.html')
+        return render(request,'library/register.html',context)
