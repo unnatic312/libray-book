@@ -16,10 +16,10 @@ Including another URLconf
 
 from django.urls import path
 from django.contrib.auth.views import login_required
-from .views import BookDetail, AddBookView, AddBookData
+from .views import BookDetail, AddBookView, AddBookDataView, BookDataView
 
 urlpatterns = [
     path('add_book_detail/',login_required(AddBookView.as_view()), name='add_book_detail'),
-    path('add_book_data/',login_required(AddBookData.as_view()), name='add_book_data'),
+    path('add_book_data/', login_required(AddBookDataView.as_view()), name='add_book_data'),
     path('<slug:book_name>/', login_required(BookDetail.as_view()), name='book_detail'),
     ]

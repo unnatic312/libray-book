@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import login,login_required
 from django.urls import path,include
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 from library.views import Index,logout_view
 from library import urls
 from library.views import AutherDetail,PublicationDetail,Register
@@ -29,4 +33,4 @@ urlpatterns = [
     path('book/',include(urls)),
     path('auther/<slug:auther_name>/', login_required(AutherDetail.as_view()), name='auther_detail'),
     path('publication/<int:pk>/', login_required(PublicationDetail.as_view()), name='publication_detail'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

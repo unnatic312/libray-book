@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+
 class Auther(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
@@ -13,6 +14,7 @@ class Auther(models.Model):
     def get_absolute_url(self):
         return (self)
 
+
 class Publication(models.Model):
     name = models.CharField(max_length=100)
         
@@ -20,20 +22,22 @@ class Publication(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return ((self.name).replace(" ","_"))
+        return (self.name).replace(" ", "_")
+
 
 class Books(models.Model):
     name = models.CharField(max_length=50)
     auther = models.ForeignKey(Auther, on_delete=models.CASCADE)
     published_on = models.DateField()
     publication = models.ManyToManyField(Publication)
-    book_data  = models.FileField(blank=True,null=True)
+    book_data = models.FileField(upload_to='library/', null=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return ((self.name).replace(" ","_"))
+        return (self.name).replace(" ", "_")
+
 
 class BookReview(models.Model):
     book_review = models.TextField()

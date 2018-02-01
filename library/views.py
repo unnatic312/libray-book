@@ -1,13 +1,13 @@
 from django.shortcuts import render, reverse
-from django.contrib.auth import logout,login
-from django.http import Http404,HttpResponseRedirect
+from django.contrib.auth import logout
+from django.http import Http404, HttpResponseRedirect
 from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 
 from .models import Books, Auther, Publication, BookReview
-from .form import BookReviewForm,AddBookDetail,AddBookData,RegisterForm
+from .form import BookReviewForm, AddBookDetail, AddBookData, RegisterForm
 # Create your views here.
 
 
@@ -78,11 +78,23 @@ class AutherDetail(View):
 
 class PublicationDetail (DetailView):
     model = Publication
+    context_object_name = 'publication_object'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['book_list'] = Books.objects.filter(publication='3')
+        context['publication_list'] = Publication.objects.all()
         return context
+
+
+class BookDataView (View):
+    def post(self, request, book_name):
+        name = book_name.replace('_', ' ')
+        book = Books.objects.get(name=name)
+        file_name = book.book_data.name
+        template = 'library/'+ file_name
+        return render(request, template)
+    def get(self,request):
+        return
 
 
 def logout_view(request):
@@ -100,21 +112,22 @@ class AddBookView (FormView):
         return super().form_valid(form)
 
 
-class AddBookData(View):
+class AddBookDataView(View):
     def post(self,request):
+        import pdb
         form = AddBookData(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('index')
+            return HttpResponseRedirect(reverse('index'))
         else:
             form = AddBookData()
-            return HttpResponseRedirect('add_book_data',context={'form':form,})
+            return render(request, 'library/add_book_data.html', context={'form': form})
 
         return render(request,'library/add_book_data.html',context={'form':form})
 
     def get(self, request):
         form = AddBookData()
-        return HttpResponseRedirect('add_book_data', context={'form': form, })
+        return render(request,'library/add_book_data.html', context={'form':form})
 
 
 class Register(View):

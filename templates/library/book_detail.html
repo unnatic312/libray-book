@@ -9,7 +9,8 @@
         <li><strong> Book Title   :</strong>   {{ book.name }}. <br></li>
         <li><strong> Written By   :</strong>   {{ book.auther }}. <br></li>
         <li><strong> Book Published_on   :</strong>   {{ book.published_on }}. <br></li>
-        <li><strong> Book Data   :</strong>   {{ book.book_data }}. <br></li>
+        <li><strong> Book Data   :</strong>
+            <a href="/../../media/{{book.book_data.name}}" >{{ book.book_data }}.</a> <br></li>
 
         <form  method="post" accept-charset="utf-8">
             {% csrf_token %}
@@ -42,6 +43,6 @@
         </div>
 
     </div>
-    
+
         <a href="{% url 'index' %}" >  Go Back  </a>
 {% endblock %}
