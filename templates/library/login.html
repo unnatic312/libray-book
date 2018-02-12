@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 {% load static %}
+{% load widget_tweaks %}
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +16,25 @@
 
 		<div id="content">
                 <form method="post" accept-charset="utf-8">
+
                     {% csrf_token %}
-                    <div style="display:inline-block;">
-                    {{ form.as_p }}
-                    <input type="submit" value="submit"/>
-                    </div>
+                    <table>
+                            <tr>
+                                {{ form.errors }}
+                            </tr>
+                            {% for field in form.visible_fields %}
+                            <tr>
+                                <th> {{ field.label_tag }} </th>
+                                <td> {{ field|add_class:"form-control" }} </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <th>    </th>
+                               <td> <input type="submit" value="Login"> </td>
+                            </tr>
+
+                        </table>
+
                 </form>
 		</div>
 

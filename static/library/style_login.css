@@ -24,3 +24,11 @@ hr {
 body {
 	background-color: azure;
 }
+
+.form-control {
+    width:250px;
+    background: none;
+    border: none;
+    margin: 5%;
+    padding-top: 10px;
+}

@@ -1,4 +1,5 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import Http404, HttpResponseRedirect
 from django.views import View
@@ -8,6 +9,7 @@ from django.contrib.auth.models import User
 
 from .models import Books, Auther, Publication, BookReview
 from .form import BookReviewForm, AddBookData, RegisterForm
+
 # Create your views here.
 
 
@@ -34,7 +36,6 @@ class Register(View):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))
-
 
 
 class Index(View):
@@ -108,7 +109,7 @@ class PublicationDetail (DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['publication_list'] = Publication.objects.all()
+        context['books'] = Books.objects.filter(publication=context['object'])
         return context
 
 
@@ -134,4 +135,4 @@ class UpdateBookForm (UpdateView):
     model = Books
     fields = ['name','auther', 'published_on', 'publication', 'book_data']
     template_name_suffix = '_update_form'
-    success_url = 'index.html'
+    success_url = reverse_lazy('index')
