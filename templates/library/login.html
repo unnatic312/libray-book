@@ -1,18 +1,35 @@
-{% extends 'library/base.html' %}
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login page</title>
+	<link rel="stylesheet" href="{% static 'library/style_login.css' %}">
+</head>
+<body>
+	<div id="container">
+		<div id="title">
+			<h2>  Login  </h2>
+		</div>
 
-{% block content %}
+		<div id="content">
+                <form method="post" accept-charset="utf-8">
+                    {% csrf_token %}
+                    <div style="display:inline-block;">
+                    {{ form.as_p }}
+                    <input type="submit" value="submit"/>
+                    </div>
+                </form>
+		</div>
 
-    <form method="post" accept-charset="utf-8">
-        {% csrf_token %}
-        <div style="display:inline-block;">
-        {{ form.as_p }}
-        <input type="submit" value="submit"/>
-        </div>
-    </form>
+		<hr>
 
-    <br>
-    <p> If you not have an account please register Here.
-    <a href="{% url 'register' %}"/> Sign Up </a>
-    </p>
+		<div id="footer">
+			<p>  Forget Password <a href=""> click here. </a> </p>
+			<p>  Not have an account <a href="{% url 'register' %}"/> register here. </a> </p>
+		</div>
 
-{% endblock %}
+	</div>
+</body>
+</html>

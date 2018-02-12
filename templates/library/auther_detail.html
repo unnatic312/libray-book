@@ -1,0 +1,24 @@
+{% extends 'library/base.html' %}
+{% block content %}
+{{ block.super }}
+
+<div class="content-card">
+        <div class="content-card-title">
+            <p> Auther Detail </p>
+        </div>
+
+	<div class="detail_obj">
+	    <ul><strong><h2> {{ auther }}</h2> </strong></ul>
+	    <li> {{ auther.bio }} </li>
+	</div>
+	<div class="detail_obj">
+		<h2> Books Available </h2>
+	    {% for book in book_list %}
+    	<ul> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{ book.name }}</a> </ul>
+    	<br>
+    	{% endfor %}
+	</div>
+	<a href="{% url 'index' %}" >  Go Back  </a>
+</div>
+
+{% endblock %}

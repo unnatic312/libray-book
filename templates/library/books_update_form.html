@@ -1,0 +1,37 @@
+{% extends 'library/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="content-card">
+        <div class="content-card-title">
+            <p> Add Book details </p>
+        </div>
+
+        <div class="content-card-data">
+            <form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                {% if form.error %}
+                    {{form.errors}}
+                {% endif %}
+                <table style="text-align:center;" outer-border="2px">
+
+                    {% for field in form.visible_fields %}
+                    <tr>
+                        <th>
+                            {{ field.label_tag }}
+                        </th>
+                        <td>
+                            {{ field|add_class:"form-control" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                        <td colspan="2">
+                            <input type="submit" value="Update Book" />
+                        </td>
+
+                </table>
+            </form>
+            <a href="{% url 'index' %}" >  Go Back  </a>
+        </div>
+    </div>
+{% endblock %}

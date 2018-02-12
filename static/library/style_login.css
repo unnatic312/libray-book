@@ -1,0 +1,26 @@
+* {
+	text-align: center;
+}
+
+#container {
+	background-color: wheat;
+	height: auto;
+	width: 400px;
+	outline: 2px grey solid;
+	position: fixed;
+	left: 36%;
+	top: 30%;
+}
+
+#title {
+	text-decoration: unset;
+	font-weight: bolder;
+}
+
+hr {
+	width: 80%;
+}
+
+body {
+	background-color: azure;
+}

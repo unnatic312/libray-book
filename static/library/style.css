@@ -1,40 +1,209 @@
-{% load static %}
 
-.detail{
-    background-color: transparent;
-    display: flex; 
-    padding: 20px; 
-    margin: 20px; 
-	}
+ /*************************grid style**********************/
+* {
+	box-sizing: border-box;
+}
 
-.detail_obj{
-	width: 50%;
-	}
+body {
+ 	display: grid;
+ 	grid-template-rows: 20% auto 20%;
+ 	grid-template-columns: 25% 23% 23% 25%;
+ 	grid-template-areas: 
+ 		"header header header header"
+ 		"aside main main main"
+ 		"footer footer footer footer" ;
+ 	justify-content: center;
+ 	grid-gap: 10px;
+}
 
-#base_body{
-	background-blend-mode: color-dodge;
-	background-color: lavenderblush;
-	}
+header {
+  	grid-area: header;
+  	display: inline-grid;
+  	background-color: wheat;
+  	color: black;
+}
 
-header{
-	display: block; 
-	width: 100%; 
-    height: 80px; 
-    background-color: darkseagreen; 
-    text-align: center; 
-	}
+footer {
+  	grid-area: footer;
+  	background-color: wheat;
+  	flex-direction: column;
+  	color: black;
+}
 
-#base_content{
-	display: grid;
-	object-position: inherit;
-	}
+aside {
+  	grid-area: aside;
+}
 
-h1,h2,p{
-	text-align:center; 
-	}
+content {
+	grid-area: main;
+}
 
-#login{
-	display:flex;
-	background-color: darkseagreen;
+/* ******************general style**********************************/
+
+p {
+	text-align: center;
+}
+
+footer, aside, .content-card-data {
+	display: flex;
+	overflow-wrap: wrap;
+	justify-content: center;
+}
+
+.form-control {
+    width:300px;
+    border-radius: 5px;
+}
+  /****************** header style****************/
+
+.search-bar {
+	border: 2px inset floralwhite;
+	width: 40%; 
+}
+
+#company-logo-header {
+	width: 100%;
+	height: 400px;
+}
+
+
+.search-bar img {
+	width: 8%;
+	height: 8%;
+}
+
+.social-media, header, {
+	display: flex;
+	flex-direction: column;
+}
+
+.social-media-icons, .nav-container, .user-profile{
+	display: inline-flex;
 	align-items: center;
+}
+
+.social-media img {
+	width: 30px;
+	height: 30px;
+	margin: 3px;
+}
+
+.user-profile {
+	float: right;
+}
+  /******************aside style****************/
+#aside-contact {
+	background-color: wheat;
+	margin: 10px;
+	border: 2px inset #57A;
+	border-radius: 5px;
+}
+
+#aside-container {
+	background-color: cadetblue;
+}
+
+#aside-footer {
+	margin: 10px;
+	border: 2px inset #57A;
+	justify-content: center;
+}
+  
+  /******************main content style****************/
+
+.content-card {
+	background-color: #FEE;
+	margin: 20px;
+	padding: 20px;
+	max-height: 500px;
+	overflow: auto;
+}
+
+.content-card-title {
+	text-align: center;
+	text-decoration: underline;
+	font-weight: bold;
+	font-style: oblique;
+}
+
+.detail_obj {
+    text-align: center;
+}
+
+#image-galary {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.image-galary-content {
+	border-radius: 5px;
+	border-style: inset;
+	border-color: floralwhite;
+	margin: 10px;
+}
+
+.slider-image {
+	width: 200px;
+	height: 200px;
+	padding: 10px;
+}
+
+  /******************footer style****************/
+
+.footer-content {
+	justify-content: center;
+}
+
+#copy-right-footer {
+	color: red;
+	border: none;
+}
+ /***************navigation style****************/
+
+ .nav-content {
+ }
+
+.nav-container, .menu-content {
+	float: right;
+	padding: 5px;
+}
+
+#top-nav {
+	background-color: wheat;
+}
+
+nav a, nav button {
+	text-decoration: none;
+	color: peru;
+	font-size: 15px;
+}
+
+.dropdown-button, user-profile input {
+	overflow: hidden;
+	background-color: inherit;
+	border: none;
+	font-size: inherit;
+}
+
+.dropdown-container {
+	display: none;
+	position: absolute;
+	overflow: hidden;
+	background-color: #FEE;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	font-size: inherit;
+} 
+
+.dropdown-content {
+	display: block;
+	padding: 2%;
+}
+
+.dropdown-button:hover, .menu-content a:hover {
+	background-color: goldenrod;
+	color: oldlace;
+} 
+
+.dropdown:hover .dropdown-container{
+	display: block;
 }

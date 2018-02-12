@@ -1,14 +1,40 @@
 from django.shortcuts import render, reverse
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.http import Http404, HttpResponseRedirect
 from django.views import View
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 
 from .models import Books, Auther, Publication, BookReview
-from .form import BookReviewForm, AddBookDetail, AddBookData, RegisterForm
+from .form import BookReviewForm, AddBookData, RegisterForm
 # Create your views here.
+
+
+class Register(View):
+    def get(self,request):
+        form = RegisterForm()
+        return render(request,'library/register.html',context={'form':form})
+
+    def post(self,request):
+        form = RegisterForm(request.POST)
+        context = {'form': form}
+
+        if form.is_valid():
+            user = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            user = User.objects.create_user(user, email, password)
+            user.save()
+            login(request,user)
+            return render(request,'library/login.html')
+        return render(request,'library/register.html',context)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))
+
 
 
 class Index(View):
@@ -86,32 +112,6 @@ class PublicationDetail (DetailView):
         return context
 
 
-class BookDataView (View):
-    def post(self, request, book_name):
-        name = book_name.replace('_', ' ')
-        book = Books.objects.get(name=name)
-        file_name = book.book_data.name
-        template = 'library/'+ file_name
-        return render(request, template)
-    def get(self,request):
-        return
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('login'))
-
-
-class AddBookView (FormView):
-    template_name = 'library/add_book_detail.html'
-    success_url = '/index/'
-    form_class = AddBookDetail
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-
 class AddBookDataView(View):
     def post(self,request):
         import pdb
@@ -130,20 +130,8 @@ class AddBookDataView(View):
         return render(request,'library/add_book_data.html', context={'form':form})
 
 
-class Register(View):
-    def get(self,request):
-        form = RegisterForm()
-        return render(request,'library/register.html',context={'form':form})
-
-    def post(self,request):
-        form = RegisterForm(request.POST)
-        context = {'form': form}
-
-        if form.is_valid():
-            user = request.POST['username']
-            email = request.POST['email']
-            password = request.POST['password']
-            user = User.objects.create_user(user, email, password)
-            user.save()
-            return render(request,'library/login.html')
-        return render(request,'library/register.html',context)
+class UpdateBookForm (UpdateView):
+    model = Books
+    fields = ['name','auther', 'published_on', 'publication', 'book_data']
+    template_name_suffix = '_update_form'
+    success_url = 'index.html'

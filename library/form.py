@@ -10,13 +10,6 @@ class BookReviewForm(forms.ModelForm):
         fields = ('book_review','book',)
 
 
-class AddBookDetail(forms.ModelForm):
-
-    class Meta:
-        model = Books
-        fields = ('name','auther','publication','published_on',)
-
-
 class AddBookData(forms.ModelForm):
 
     class Meta:

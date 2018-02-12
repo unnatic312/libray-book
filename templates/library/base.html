@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 "/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% load static %}
+    {% block title %}
+        <title> Index </title>
+    {% endblock %}
+
+	<link rel="stylesheet" href='{% static "library/style.css" %}' type="text/css"/>
+</head>
+<body>
+    {% block header %}
+        <!-- ..................... /header................. -->
+        <header id="header">
+            <div id="header-content">
+                <img src="{% static 'book_logo.jpg' %}" id="company-logo-header" alt="logo">
+            </div>
+
+            <nav id="top-nav">
+                <div class="nav-container">
+                    <div class="nav-content">
+                        <div class="user-profile">
+                            <form action="{% url 'logout' %}" method="get">
+                                <input type="submit" value="logout">
+                            </form>
+                            <p> Welcome {{ user }} </p>
+                            <img src="" alt="user-profile">
+                        </div>
+                    </div>
+
+                    <div class="nav-content">
+                        <div class="search-bar">
+                            <span><img src="{% static 'icon_search.png' %}" alt="search-logo"></span>
+                            <input type="text" name="serch-content" id="search-input">Search book
+                        </div>
+                    </div>
+
+                    <div class="nav-content">
+                        <div class="menu-content">
+                            <a href=""> Contact </a>
+                        </div>
+                        <div class="menu-content">
+                            <a href=""> About Us </a>
+                        </div>
+
+                        <div class="menu-content">
+                            <a href="{% url 'index' %}"> Index </a>
+                        </div>
+                        <div class="menu-content">
+                            <div class=dropdown>
+                                <button class="dropdown-button"> Events </button>
+                                <div class="dropdown-container">
+                                    <li class="dropdown-content"> <a href=""> Workshops </a> </li>
+                                    <li class="dropdown-content"> <a href=""> Battles </a> </li>
+                                    <li class="dropdown-content"> <a href=""> FunTime </a> </li>
+                                    <li class="dropdown-content"> <a href=""> NightShows </a> </li>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </nav>
+
+        </header>
+    {% endblock %}
+
+    {% block aside %}
+        <!-- ......................./aside/............... -->
+        <aside class="">
+            <div id="aside-container" class="container">
+                <div id="aside-news-feed" class="aside-content">
+                        <p>  News Feeds </p>
+                </div>
+
+                <div class="aside-content">
+                    <div id="aside-contact" class="aside-content">
+                        <p> <strong> Reach To Us: </strong> </p>
+                        <address>
+                            7, Race Course Road <br>
+                            New Delhi - 110011 <br>
+                            Ph:23018939 23018668 23015470 <br>
+                            Fax-23015603
+                        </address>
+                    </div>
+                </div>
+
+                <div class="aside-content">
+                    <a href="{% url 'add_book' %}" style="align:center"> Add Book detail </a>
+                </div>
+
+                <div id="aside-footer" class="aside-content">
+
+                    <div class="social-media">
+                        <p> follow us on social media... </p>
+                        <div class="social-media-icons">
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_facebook.png' %}" alt="facebook"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_twitter.png' %}" alt="twitter"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_instagram.png' %}" alt="instagram"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_gplus.png' %}" alt="google+"> </a>
+                            </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </aside>
+    {% endblock %}
+
+    <!-- ......................./main content/............... -->
+    <content>
+		<div class="grid-container">
+    {% block content %}
+
+
+    {% endblock %}
+        </div>
+    </content>
+    {% block footer %}
+	<!-- ......................./footer/............... -->
+        <footer id="footer-container" class="container">
+
+            <div class="footer-content">
+
+                <div class="social-media">
+                    <div class="social-media-icons">
+                        <div class="social-media-icons">
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_facebook.png' %}" alt="facebook"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_twitter.png' %}" alt="twitter"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_instagram.png' %}" alt="instagram"> </a>
+                            </div>
+                            <div class="social-media-content">
+                                <a href=""> <img src="{% static 'icon_gplus.png' %}" alt="google+"> </a>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+
+                <div id="copy-right-footer" class="footer-content">
+                    <p> copy right to Quixom Technology </p>
+                </div>
+            </div>
+        </footer>
+    {% endblock %}
+</body>
+</html>
