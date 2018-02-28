@@ -10,12 +10,26 @@
 
         <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
-            {% if form.error %}
-                {{form.errors}}
+            {% if form_b.errors or form_a.errors %}
+                {{form_b.errors}}
+                {{form_a.errors}}
             {% endif %}
             <table style="text-align:center;" outer-border="2px">
 
-                {% for field in form.visible_fields %}
+                <!---------------------data of book model------------------->
+                {% for field in form_b.visible_fields %}
+                <tr>
+                    <th>
+                        {{ field.label_tag }}
+                    </th>
+                    <td>
+                        {{ field|add_class:"form-control" }}
+                    </td>
+                </tr>
+                {% endfor %}
+
+                <!---------------------data of auther model------------------->
+                {% for field in form_a.visible_fields %}
                 <tr>
                     <th>
                         {{ field.label_tag }}

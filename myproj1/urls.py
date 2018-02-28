@@ -19,6 +19,7 @@ from django.urls import path,include
 
 from django.conf import settings
 from django.conf.urls.static import static
+from serializer_demo import urls as serializer_urls
 
 from library.views import Index,logout_view
 from library import urls
@@ -32,5 +33,6 @@ urlpatterns = [
     path('index/', login_required(Index.as_view()), name='index'),
     path('book/',include(urls)),
     path('auther/<slug:auther_name>/', login_required(AutherDetail.as_view()), name='auther_detail'),
+    path('serializer/', include(serializer_urls)),
     path('publication/<int:pk>/', login_required(PublicationDetail.as_view()), name='publication_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,7 +8,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 
 from .models import Books, Auther, Publication, BookReview
-from .form import BookReviewForm, AddBookData, RegisterForm
+from .form import BookReviewForm, AddBookData, RegisterForm, AddAutherForm
 
 # Create your views here.
 
@@ -116,19 +116,23 @@ class PublicationDetail (DetailView):
 class AddBookDataView(View):
     def post(self,request):
         import pdb
-        form = AddBookData(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        form_b = AddBookData(request.POST, request.FILES)
+        form_a = AddAutherForm(request.POST)
+        if form_b.is_valid() and form_a.is_valid():
+            form_b.save()
+            form_a.save()
             return HttpResponseRedirect(reverse('index'))
         else:
-            form = AddBookData()
-            return render(request, 'library/add_book_data.html', context={'form': form})
+            form_b = AddBookData(request.POST, request.FILES)
+            form_a = AddAutherForm(request.POST)
+            return render(request, 'library/add_book_data.html', context={'form_b':form_b, 'form_a':form_a})
 
-        return render(request,'library/add_book_data.html',context={'form':form})
+        return render(request,'library/add_book_data.html',context={'form_b':form_b, 'form_a':form_a})
 
     def get(self, request):
-        form = AddBookData()
-        return render(request,'library/add_book_data.html', context={'form':form})
+        form_a = AddBookData()
+        form_b = AddAutherForm()
+        return render(request,'library/add_book_data.html', context={'form_b':form_b, 'form_a':form_a})
 
 
 class UpdateBookForm (UpdateView):
