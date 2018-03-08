@@ -39,13 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'django_filters',
     'rest_framework',
     'serializer_demo.apps.SerializerDemoConfig',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    "DEFAULT_RENDERER_CLASSES": ( "rest_framework.renderers.JSONRenderer",'rest_framework.renderers.TemplateHTMLRenderer',)
 }
 
 MIDDLEWARE = [

@@ -1,15 +1,16 @@
 
 {% extends 'library/base.html' %}
 {% block content %}
-<div class="content-card">
-        <div class="content-card-title">
-            <p> Add Book details </p>
+<div class="content-card card">
+        <div class="card-title mx-auto">
+            <h2> Add Book details </h2>
         </div>
         {{ block.super }}
-        <div class="detail">
+        <div class="card-body">
 
-            <div class="detail_obj">
+            <div class="card-body">
                     <h2>{{ book.name }}</h2>
+                <a class="btn btn-link" href="{% url 'book_serializer_detail' book.id %}"> Serialize Detail </a>
                 <li><strong> Book Title   :</strong>   {{ book.name }}. <br></li>
                 <li><strong> Written By   :</strong>   {{ book.auther }}. <br></li>
                 <li><strong> Book Published_on   :</strong>   {{ book.published_on }}. <br></li>
@@ -23,30 +24,34 @@
                     {% endfor %}
                     </ul>
                 </li>
-                <form  method="post" accept-charset="utf-8">
-                    {% csrf_token %}
-                    <p>  {{ form.as_p }}  </p>
 
-                    <input type="submit" value="Submit">
-                </form>
+                <div class="card-body">
+                    <h5> Latest Book Reviews </h5>
+                    {% if reviews %}
+                    {% for review in reviews %}
+                        <li>
+                            <strong>Review : </strong> {{ review.book_review }}
+                            <ul> @ {{ review.date_on }}</ul>
+                        </li>
+                    {% endfor %}
+                    {% else %}
+                         <p> No reviews to Display </p>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                         <form  method="post" accept-charset="utf-8">
+                             <div class="card-title mx-auto">
+                                <h5> Add Book review </h5>
+                            </div>
+                            {% csrf_token %}
+                            <table>  {{ form.as_table }}  </table>
 
-                <div class="detail_obj">
-                <h2> Latest Book Reviews </h2>
-                {% if reviews %}
-                {% for review in reviews %}
-                    <li>
-                        <strong>Review : </strong> {{ review.book_review }}
-                        <ul> @ {{ review.date_on }}</ul>
-                    </li>
-                {% endfor %}
-                {% else %}
-                     <p> No reviews to Display </p>
-                {% endif %}
-
+                            <input type="submit" value="Submit">
+                         </form>
+                    </div>
+                </div>
             </div>
-
-            </div>
-
         </div>
         <br>
         <a href='{% url "update_book" book.id %}'> Update Book Data </a><br><br>

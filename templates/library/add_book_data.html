@@ -1,13 +1,20 @@
 {% extends 'library/base.html' %}
 {% load widget_tweaks %}
 
+
+{% block title %}
+<title>  Add BOOK DATA  </title>
+{% endblock %}
+
+
 {% block content %}
     {{ block.super }}
-    <div class="content-card">
-        <div class="content-card-title">
-            <p> Add Book </p>
+    <div class="card">
+        <a href="{% url 'index' %}" class="pull-right">  Go Back  </a>
+        <div class="card-title mx-auto">
+            <h2> Add Book </h2>
         </div>
-
+    <div class="card-body">
         <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
             {% if form_b.errors or form_a.errors %}
@@ -40,13 +47,10 @@
                 </tr>
                 {% endfor %}
                     <td colspan="2">
-                        <input type="submit" value="ADD BOOK" />
+                        <input type="submit" value="ADD BOOK" class="btn btn-default" />
                     </td>
-
             </table>
-
-
         </form>
-    <a href="{% url 'index' %}" >  Go Back  </a>
+        </div>
     </div>
 {% endblock %}

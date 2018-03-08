@@ -1,43 +1,4 @@
 
- /*************************grid style**********************/
-* {
-	box-sizing: border-box;
-}
-
-body {
- 	display: grid;
- 	grid-template-rows: 20% auto 20%;
- 	grid-template-columns: 25% 23% 23% 25%;
- 	grid-template-areas: 
- 		"header header header header"
- 		"aside main main main"
- 		"footer footer footer footer" ;
- 	justify-content: center;
- 	grid-gap: 10px;
-}
-
-header {
-  	grid-area: header;
-  	display: inline-grid;
-  	background-color: wheat;
-  	color: black;
-}
-
-footer {
-  	grid-area: footer;
-  	background-color: wheat;
-  	flex-direction: column;
-  	color: black;
-}
-
-aside {
-  	grid-area: aside;
-}
-
-content {
-	grid-area: main;
-}
-
 /* ******************general style**********************************/
 
 p {
@@ -51,14 +12,19 @@ footer, aside, .content-card-data {
 }
 
 .form-control {
-    width:300px;
+    width:400px;
     border-radius: 5px;
 }
+
+.bg-light {
+    background-color: floralwhite;
+}
+
   /****************** header style****************/
 
 .search-bar {
 	border: 2px inset floralwhite;
-	width: 40%; 
+	width:100%;
 }
 
 #company-logo-header {
@@ -66,9 +32,12 @@ footer, aside, .content-card-data {
 	height: 400px;
 }
 
+#search-input {
+    width: 100%;
+}
 
-.search-bar img {
-	width: 8%;
+.icon {
+	width: 8%; !important
 	height: 8%;
 }
 
@@ -77,7 +46,7 @@ footer, aside, .content-card-data {
 	flex-direction: column;
 }
 
-.social-media-icons, .nav-container, .user-profile{
+.social-media-icons, .inline-flex, .user-profile{
 	display: inline-flex;
 	align-items: center;
 }
@@ -110,21 +79,6 @@ footer, aside, .content-card-data {
 }
   
   /******************main content style****************/
-
-.content-card {
-	background-color: #FEE;
-	margin: 20px;
-	padding: 20px;
-	max-height: 500px;
-	overflow: auto;
-}
-
-.content-card-title {
-	text-align: center;
-	text-decoration: underline;
-	font-weight: bold;
-	font-style: oblique;
-}
 
 .detail_obj {
     text-align: center;
@@ -160,8 +114,6 @@ footer, aside, .content-card-data {
 }
  /***************navigation style****************/
 
- .nav-content {
- }
 
 .nav-container, .menu-content {
 	float: right;
@@ -172,12 +124,6 @@ footer, aside, .content-card-data {
 	background-color: wheat;
 }
 
-nav a, nav button {
-	text-decoration: none;
-	color: peru;
-	font-size: 15px;
-}
-
 .dropdown-button, user-profile input {
 	overflow: hidden;
 	background-color: inherit;
@@ -185,25 +131,7 @@ nav a, nav button {
 	font-size: inherit;
 }
 
-.dropdown-container {
-	display: none;
-	position: absolute;
-	overflow: hidden;
-	background-color: #FEE;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	font-size: inherit;
-} 
-
-.dropdown-content {
-	display: block;
-	padding: 2%;
-}
-
 .dropdown-button:hover, .menu-content a:hover {
 	background-color: goldenrod;
 	color: oldlace;
-} 
-
-.dropdown:hover .dropdown-container{
-	display: block;
 }

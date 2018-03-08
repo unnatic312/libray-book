@@ -1,20 +1,21 @@
 {% extends 'library/base.html' %}
 
 {% block content %}
-<div class="content-card">
-    <div class="content-card-title">
-        <p> {{ object.name }} </p>
+<div class="card">
+    <div class="card-title">
+        <h2> {{ object.name }} </h2>
     </div>
 
-    <div class="contet-card-data">
+    <div class="card-body">
         {% if books %}
         <p style="text-align:left"><strong> Books Published are: </strong> </p>
             {% for book in books %}
                <li> {{ book }} </li>
             {% endfor %}
         {% endif %}
-    </div>
+
     <br>
     <a href="{% url 'index' %}" >  Go Back  </a>
-</div>
+    </div>
+    </div>
 {% endblock %}

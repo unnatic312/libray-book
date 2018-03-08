@@ -2,12 +2,12 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <div class="content-card">
-        <div class="content-card-title">
-            <p> Add Book details </p>
+    <div class="card">
+        <div class="card-title">
+            <h2> Add Book details </h2>
         </div>
 
-        <div class="content-card-data">
+        <div class="card-body">
             <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
                 {% if form.error %}
@@ -21,7 +21,7 @@
                             {{ field.label_tag }}
                         </th>
                         <td>
-                            {{ field|add_class:"form-control" }}
+                            {{ field|add_class:"form-control pm-2" }}
                         </td>
                     </tr>
                     {% endfor %}

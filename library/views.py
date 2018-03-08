@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import Http404, HttpResponseRedirect
@@ -10,7 +10,12 @@ from django.contrib.auth.models import User
 from .models import Books, Auther, Publication, BookReview
 from .form import BookReviewForm, AddBookData, RegisterForm, AddAutherForm
 
-# Create your views here.
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.renderers import HTMLFormRenderer, TemplateHTMLRenderer
+from rest_framework.response import Response
+from .filters import BookFilter
+from .serializers import BookSerializer, BookReviewSerializer, AutherSerializer, PublicationSerializer
 
 
 class Register(View):
@@ -44,11 +49,13 @@ class Index(View):
     publication_list = Publication.objects.order_by("name")
 
     def get(self,request):
-       return render(request,"library\index1.html",
+        f = BookFilter(request.GET, queryset=Books.objects.all())
+        return render(request,"library\index1.html",
             context= {
                 'books':self.books_list,
                 'authers':self.authers,
                 'publication_list':self.publication_list,
+                'filter':f,
                 })
 
     def post(self,request):
@@ -140,3 +147,43 @@ class UpdateBookForm (UpdateView):
     fields = ['name','auther', 'published_on', 'publication', 'book_data']
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('index')
+
+
+# serializer Views
+class BookSerializerViewset(ModelViewSet):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookReviewSerializerViewset(ModelViewSet):
+    queryset = BookReview.objects.all()
+    serializer_class = BookReviewSerializer
+
+
+class AutherSerializerViewset(ModelViewSet):
+    queryset = Auther.objects.all()
+    serializer_class = AutherSerializer
+
+
+class PublicationSerializerViewset(ModelViewSet):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
+
+
+class BookSerializerTemplateView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name= 'library/book_serializer.html'
+
+    def get(self, request, pk):
+        book = Books.objects.get(pk=pk)
+        serializer = BookSerializer(book, context={'request':request})
+        return Response({'book':book, 'serializer':serializer })
+
+    def post(self, request, pk):
+        book = get_object_or_404(Books, pk=pk)
+        serializer = BookSerializer(book, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('index')
+        return Response({'book':book, 'serializer':serializer })

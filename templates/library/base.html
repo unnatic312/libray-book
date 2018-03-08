@@ -2,87 +2,95 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0 "/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% load static %}
     {% block title %}
         <title> Index </title>
     {% endblock %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href='{% static "library/style.css" %}' type="text/css"/>
 </head>
-<body>
+<body class="container-fluid" data-spy="scroll" data-target="#sidebar-main" data-offset ="2">
+
     {% block header %}
         <!-- ..................... /header................. -->
-        <header id="header">
-            <div id="header-content">
+        <header id="header" class="mb-4">
+            <div id="header-content" class="row">
                 <img src="{% static 'book_logo.jpg' %}" id="company-logo-header" alt="logo">
             </div>
 
-            <nav id="top-nav">
-                <div class="nav-container">
-                    <div class="nav-content">
+            <div id="top-nav" class="fixed-top row">
+                <div class="nav-container navbar">
+                    <div class="nav-content col-md-3">
                         <div class="user-profile">
                             <form action="{% url 'logout' %}" method="get">
-                                <input type="submit" value="logout">
+                                <input type="submit" value="logout" class="nav-link btn btn-link">
                             </form>
                             <p> Welcome {{ user }} </p>
                             <img src="" alt="user-profile">
                         </div>
                     </div>
 
-                    <div class="nav-content">
-                        <div class="search-bar">
-                            <span><img src="{% static 'icon_search.png' %}" alt="search-logo"></span>
-                            <input type="text" name="serch-content" id="search-input">Search book
+                    <div class="nav-content col-md-5">
+                        <div class="border border-1">
+                            <img src="{% static 'icon_search.png' %}" class="rounded float-left" alt="search-logo" style="width: 7%;height: 7%;">
+                            <input type="text" name="serch-content" class="form-control" placeholder="Search Book">
                         </div>
                     </div>
 
-                    <div class="nav-content">
-
-                        <div class="menu-content">
-                            <a href=""> Contact </a>
-                        </div>
-                        <div class="menu-content">
-                            <a href=""> About Us </a>
-                        </div>
-
-                        <div class="menu-content">
-                            <a href="{% url 'index' %}"> Index </a>
-                        </div>
-                        <div class="menu-content">
-                            <div class=dropdown>
-                                <button class="dropdown-button"> Events </button>
-                                <div class="dropdown-container">
-                                    <li class="dropdown-content"> <a href=""> Workshops </a> </li>
-                                    <li class="dropdown-content"> <a href=""> Battles </a> </li>
-                                    <li class="dropdown-content"> <a href=""> FunTime </a> </li>
-                                    <li class="dropdown-content"> <a href=""> NightShows </a> </li>
+                    <div class="nav-content col-md-4">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a href="" class="nav-link"> Contact </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"> About US </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'index' %}" class="nav-link"> Index  </a>
+                            </li>
+                            <li class="nav-item">
+                                 <div class=dropdown>
+                                    <button class="btn btn-link" data-toggle="dropdown"> Events </button>
+                                    <div class="dropdown-menu">
+                                        <a href="" class="dropdown-item"> Workshops </a>
+                                        <a href="" class="dropdown-item"> Battles </a>
+                                        <a href="" class="dropdown-item"> FunTime </a>
+                                        <a href="" class="dropdown-item"> NightShows </a>
+                                    </div>
                                 </div>
-
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
 
                     </div>
                 </div>
-
-            </nav>
+            </div>
 
         </header>
     {% endblock %}
-
+<div class="row">
     {% block aside %}
         <!-- ......................./aside/............... -->
-        <aside class="">
-            <div id="aside-container" class="container">
-                <div id="aside-news-feed" class="aside-content">
-                        <p>  News Feeds </p>
-                        <a href="{% url 'serializer_root' %}"> Serialize Product </a>
-
+        <aside class="sidebar sidebar-default col-md-3 mr-3">
+            <div class="sidebar-content sidebar-box">
+                <div id="aside-news-feed" class="aside-content row">
+                        <h2 class="mx-auto">  News Feeds </h2>
                 </div>
 
-                <div class="aside-content">
-                    <div id="aside-contact" class="aside-content">
+                <a id="sidebar-main" href="{% url 'serializer_root' %}"> Serialize Product </a>
+
+                <div class="aside-content row">
+                    <div class="border bg-light p-2">
                         <p> <strong> Reach To Us: </strong> </p>
                         <address>
                             7, Race Course Road <br>
@@ -93,13 +101,13 @@
                     </div>
                 </div>
 
-                <div class="aside-content">
-                    <a href="{% url 'add_book' %}" style="align:center"> Add Book detail </a>
+                <div class="aside-content row">
+                    <a href="{% url 'add_book' %}" class="btn btn-secondary mx-auto"> Add Book detail </a>
                 </div>
 
-                <div id="aside-footer" class="aside-content">
+                <div id="aside-footer" class="aside-content row">
 
-                    <div class="social-media">
+                    <div class="social-media bg-light">
                         <p> follow us on social media... </p>
                         <div class="social-media-icons">
                             <div class="social-media-content">
@@ -123,7 +131,7 @@
     {% endblock %}
 
     <!-- ......................./main content/............... -->
-    <content>
+    <content class="col-md-8">
 		<div class="grid-container">
     {% block content %}
 
@@ -131,9 +139,10 @@
     {% endblock %}
         </div>
     </content>
+</div>
     {% block footer %}
 	<!-- ......................./footer/............... -->
-        <footer id="footer-container" class="container">
+        <footer id="footer-container" class="row">
 
             <div class="footer-content">
 

@@ -2,19 +2,19 @@
 {% block content %}
 {{ block.super }}
 
-<div class="content-card">
-        <div class="content-card-title">
-            <p> Auther Detail </p>
+<div class="content-card card">
+        <div class="card-title mx-auto">
+            <h2> Auther Detail </h2>
         </div>
 
-	<div class="detail_obj">
+	<div class="card-body">
 	    <ul><strong><h2> {{ auther }}</h2> </strong></ul>
 	    <li> {{ auther.bio }} </li>
 	</div>
-	<div class="detail_obj">
+	<div class="card-body">
 		<h2> Books Available </h2>
 	    {% for book in book_list %}
-    	<ul> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{ book.name }}</a> </ul>
+    	<li class="nav-item"> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{ book.name }}</a> </li>
     	<br>
     	{% endfor %}
 	</div>

@@ -1,0 +1,16 @@
+{% extends 'library/base.html' %}
+{% load widget_tweaks %}
+{% load rest_framework %}
+
+
+{% block content %}
+    {{ block.super }}
+    <h1>  {{book.name}}  </h1>
+    <form method="post">
+        {% csrf_token %}
+        {% render_form serializer template_pack='rest_framework/vertical' %}
+        <input type="submit" value="Submit">
+    </form>
+
+
+{% endblock %}

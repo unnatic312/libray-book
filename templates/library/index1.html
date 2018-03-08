@@ -1,48 +1,60 @@
 {% extends 'library/base.html' %}
 {% block content %}
     {{ block.super }}
-    <div class="content-card" >
-        <div class="content-card-title">
-            <p> List of Books and Authers </p>
+    <div class="card bg-light" >
+        <div class="card-title mx-auto">
+            <h1 class=""> List of Books and Authers </h1>
         </div>
-        <div class="content-card-data">
 
-            <div class="detail_obj">
-                <h2>Books Available</h2>
+        <div class="card-body">
+        <div class="card">
+            <form action="" method="get">
+                {{ filter.form.as_p }}
+                <input type="submit" />
+            </form>
+            {% for obj in filter.qs %}
+                {{ obj.name }} - {{ obj.published_on }} - {{obj.auther_id}}
+            <br/>
+            {% endfor %}
+        </div>
+
+
+            <div class="card">
+                <h3  class="p-2">Books Available</h3>
                 {% if books %}
+                <div class="d-flex flex-column flex-wrap justify-content-around" style="height:900px">
                     {% for book in books %}
-                        <li> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{book.name }}</a>
+                        <li class=""> <a href="{% url 'book_detail' book.get_absolute_url %}" >{{book.name }}</a>
                             <ul>
                                 by <strong>{{book.auther}}  </strong>
                             </ul>
                         </li>
                     {% endfor %}
                 {% else %}
-                    <p> No books to Display </p>
+                        <p> No books to Display </p>
                 {% endif %}
+                </div>
             </div>
-
             <hr>
-
-            <div class="detail_obj">
-                <h2 style="text-align: center;">Authers </h2>
+            <div class="card">
+                <h3 class="mx-auto p-2">Authers </h3>
+                <div>
                {% if authers %}
+                    <ul>
                     {% for auther in authers %}
-                        <ul> <strong><a href="{% url 'auther_detail' auther.get_absolute_url %}" >
+                        <li>
+                            <strong><a href="{% url 'auther_detail' auther.get_absolute_url %}" >
                                             {{auther.first_name}} {{auther.last_name}}
                                 </a></strong>
-
-                        </ul>
+                        </li>
                     {% endfor %}
+                        </ul>
                 {% else %}
                     <p> No Authers to Display </p>
                 {% endif %}
+                </div>
             </div>
         </div>
         <hr>
     </div>
-
-
-
 {% endblock %}
-
