@@ -17,6 +17,11 @@
                 <li><strong> Book Data   :</strong>
                     <a href="/../../media/{{book.book_data.name}}" >{{ book.book_data }}.</a> <br></li>
 
+                <li><strong> Download Book Data :</strong>
+                    <form action='{% url "download" book.book_data.path %}' method="get">
+                        <input type="submit" value="Download" class="nav-link btn btn-link">
+                    </form><br></li>
+
                 <li><strong> Publications   :</strong>
                     <ul>
                     {% for publication in book.publication.all%}

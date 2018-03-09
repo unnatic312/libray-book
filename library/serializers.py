@@ -41,14 +41,26 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
         Auther.objects.create(book=book, **auther_data)
         return book
 
+
 class BookReviewSerializer(serializers.ModelSerializer):
+    book = serializers.SlugRelatedField(
+        many = False,
+        slug_field = 'name',
+        read_only= True,
+    )
 
     class Meta:
         model = BookReview
         fields = (
             'book_review', 'book', 'date_on',
         )
-        depth = 2
+
+
+    def create(self, validate_data):
+        book_data = validate_data.pop('book')
+        bookreview = BookReview.objects.create(**validate_data)
+        Books.objects.create(bookreview=bookreview, **book_data)
+        return bookreview
 
 
 

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import logout, login
-from django.http import Http404, HttpResponseRedirect
+from django.conf import settings
+import os
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
@@ -12,7 +14,7 @@ from .form import BookReviewForm, AddBookData, RegisterForm, AddAutherForm
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from rest_framework.renderers import HTMLFormRenderer, TemplateHTMLRenderer
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from .filters import BookFilter
 from .serializers import BookSerializer, BookReviewSerializer, AutherSerializer, PublicationSerializer
@@ -171,13 +173,13 @@ class PublicationSerializerViewset(ModelViewSet):
 
 
 class BookSerializerTemplateView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
+    renderer_classes = (TemplateHTMLRenderer,)
     template_name= 'library/book_serializer.html'
 
     def get(self, request, pk):
         book = Books.objects.get(pk=pk)
         serializer = BookSerializer(book, context={'request':request})
-        return Response({'book':book, 'serializer':serializer })
+        return Response({'book':book, 'serializer':serializer }, template_name= 'library/book_serializer.html')
 
     def post(self, request, pk):
         book = get_object_or_404(Books, pk=pk)
@@ -186,4 +188,17 @@ class BookSerializerTemplateView(APIView):
         if serializer.is_valid():
             serializer.save()
             return redirect('index')
-        return Response({'book':book, 'serializer':serializer })
+        return Response({'book':book, 'serializer':serializer }, template_name= 'library/book_serializer.html')
+
+
+def download(request, path):
+    file_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            import mimetypes
+            type, encoding = mimetypes.guess_type(path)
+            content_type_guess = type
+            response = HttpResponse(fh.read(), content_type=content_type_guess)
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
