@@ -1,24 +1,26 @@
+import os
+import mimetypes
+
+from django.conf import settings
+from django.contrib.auth import logout, login
+from django.contrib.auth.models import User
+from django.db.models import Count, F
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth import logout, login
-from django.conf import settings
-import os
-from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
-from django.contrib.auth.models import User
 
-from .models import Books, Auther, Publication, BookReview
-from .form import BookReviewForm, AddBookData, RegisterForm, AddAutherForm
-
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.response import Response
 from .filters import BookFilter
+from .form import BookReviewForm, AddBookData, RegisterForm, AddAutherForm
+from .models import Books, Auther, Publication, BookReview
 from .serializers import BookSerializer, BookReviewSerializer, AutherSerializer, PublicationSerializer
 
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 class Register(View):
     def get(self,request):
@@ -49,24 +51,35 @@ class Index(View):
     books_list = Books.objects.order_by('name')
     authers = Auther.objects.order_by('first_name')
     publication_list = Publication.objects.order_by("name")
+    active = User.objects.aggregate(
+        total_users=Count('id'),
+        total_active_users=Count('id', filter=F('is_active')),
+    )
+
 
     def get(self,request):
         f = BookFilter(request.GET, queryset=Books.objects.all())
-        return render(request,"library\index1.html",
-            context= {
-                'books':self.books_list,
-                'authers':self.authers,
-                'publication_list':self.publication_list,
-                'filter':f,
-                })
+        context = {
+            'books': self.books_list,
+            'authers': self.authers,
+            'publication_list': self.publication_list,
+            'filter': f,
+        }
+        context.update(self.active)
+
+        return render(request,"library\index1.html", context=context,
+            )
 
     def post(self,request):
-        return render(request, "library\index1.html",
-            context={
-                'books': self.books_list,
-                'authers': self.authers,
-                'publication_list': self.publication_list,
-            })
+        context = {
+            'books': self.books_list,
+            'authers': self.authers,
+            'publication_list': self.publication_list,
+        }
+        context.update(self.active)
+
+        return render(request, "library\index1.html", context=context,
+            )
 
 
 class BookDetail(View):
@@ -195,10 +208,12 @@ def download(request, path):
     file_path = os.path.join(settings.MEDIA_ROOT, path)
     if os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
-            import mimetypes
+            # mimetypes.guess_type automatically takes content type of file
             type, encoding = mimetypes.guess_type(path)
             content_type_guess = type
-            response = HttpResponse(fh.read(), content_type=content_type_guess)
+
+            # content_type='application/forcedownload' will actually force to download anyformat data
+            response = HttpResponse(fh.read(), content_type='application/forcedownload')
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
     raise Http404

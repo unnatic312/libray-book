@@ -3,13 +3,21 @@
 {% block content %}
 <div class="content-card card">
         <div class="card-title mx-auto">
-            <h2> Add Book details </h2>
+            <h2> Book details </h2>
         </div>
         {{ block.super }}
         <div class="card-body">
 
             <div class="card-body">
+                <div class="d-flex flex-row justify-content-md-between align-items-center">
                     <h2>{{ book.name }}</h2>
+
+                    <form action='{% url "download" book.book_data.path %}' method="get">
+                        <button type="submit" class="btn btn-link"> Download
+                            <span class="glyphicon glyphicon-cloud-download"></span>
+                        </button>
+                    </form>
+                </div>
                 <a class="btn btn-link" href="{% url 'book_serializer_detail' book.id %}"> Serialize Detail </a>
                 <li><strong> Book Title   :</strong>   {{ book.name }}. <br></li>
                 <li><strong> Written By   :</strong>   {{ book.auther }}. <br></li>
@@ -17,15 +25,11 @@
                 <li><strong> Book Data   :</strong>
                     <a href="/../../media/{{book.book_data.name}}" >{{ book.book_data }}.</a> <br></li>
 
-                <li><strong> Download Book Data :</strong>
-                    <form action='{% url "download" book.book_data.path %}' method="get">
-                        <input type="submit" value="Download" class="nav-link btn btn-link">
-                    </form><br></li>
 
                 <li><strong> Publications   :</strong>
                     <ul>
                     {% for publication in book.publication.all%}
-                        <a href="{% url 'publication_detail' publication.id %}">{{publication.name}} </a>
+                        <a href="{% url 'publication_detail' publication.id %}">{{publication.name}} </a><br>
                     {% endfor %}
                     </ul>
                 </li>
@@ -60,6 +64,5 @@
         </div>
         <br>
         <a href='{% url "update_book" book.id %}'> Update Book Data </a><br><br>
-        <a href="{% url 'index' %}" >  Go Back  </a>
 </div>
 {% endblock %}

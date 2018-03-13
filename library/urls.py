@@ -22,5 +22,5 @@ urlpatterns = [
     path('add_book/', login_required(AddBookDataView.as_view()), name='add_book'),
     path('update/<int:pk>/', login_required(UpdateBookForm.as_view()), name='update_book' ),
     path('<slug:book_name>/', login_required(BookDetail.as_view()), name='book_detail'),
-    path('r^download/(?P<path>\w+)$/', login_required(download), name='download'),
+    path(r'^download/(?P<path>\w+)/$', login_required(download), name='download'),
     ]

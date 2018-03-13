@@ -5,12 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% load static %}
+    {% load widget_tweaks %}
     {% block title %}
         <title> Index </title>
     {% endblock %}
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Popper JS -->
@@ -25,31 +26,47 @@
     {% block header %}
         <!-- ..................... /header................. -->
         <header id="header" class="mb-4">
+
             <div id="header-content" class="row">
-                <img src="{% static 'book_logo.jpg' %}" id="company-logo-header" alt="logo">
+                <img src="{% static 'images/book_rack_1.jpg' %}" id="company-logo-header" alt="logo">
             </div>
 
-            <div id="top-nav" class="fixed-top row">
-                <div class="nav-container navbar">
-                    <div class="nav-content col-md-3">
-                        <div class="user-profile">
-                            <form action="{% url 'logout' %}" method="get">
-                                <input type="submit" value="logout" class="nav-link btn btn-link">
+            <div id="top-nav" class="row fixed-top">
+                <div class="nav-container navbar col-md-12">
+                    <div class="nav-content col">
+                        <div class="float-left">
+                            <form action="{% url 'logout' %}" method="get" class="col-md-3">
+                                <div class="d-flex flex-row justify-content-md-center">
+                                    <input type="submit" value="logout" class="nav-link btn btn-link">
+                                </div>
                             </form>
-                            <p> Welcome {{ user }} </p>
-                            <img src="" alt="user-profile">
+                            <div class="user-profile col-md-9">
+                                <p> Welcome {{ user }} </p>
+                                <img src="" alt="user" class="col-md-3">
+                            </div>
                         </div>
                     </div>
+                    {% if filter.form %}
 
-                    <div class="nav-content col-md-5">
-                        <div class="border border-1">
-                            <img src="{% static 'icon_search.png' %}" class="rounded float-left" alt="search-logo" style="width: 7%;height: 7%;">
-                            <input type="text" name="serch-content" class="form-control" placeholder="Search Book">
+                        <div class="nav-content col">
+                            <div class="border border-1">
+                                <form action="" method="get">
+                                    <div class="d-flex flex-row justify-content-left">
+                                        <button type="submit" class="btn btn-link">
+                                        <span class="glyphicon glyphicon-search"></span> Search </button>
+                                        {% for fields in filter.form %}
+                                             {{ fields|add_class:"form-control" }}
+                                        {% endfor %}
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="nav-content col-md-4">
-                        <ul class="nav">
+                    {% endif %}
+
+                    <div class="nav-content col">
+                        <ul class="nav float-right">
                             <li class="nav-item">
                                 <a href="" class="nav-link"> Contact </a>
                             </li>
@@ -167,7 +184,7 @@
             </div>
 
                 <div id="copy-right-footer" class="footer-content">
-                    <p> copy right to Quixom Technology </p>
+                    <p> <span class="glyphicon glyphicon-copyright-mark"></span> copy rights to to Unnati </p>
                 </div>
             </div>
         </footer>

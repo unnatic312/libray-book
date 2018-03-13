@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'drf_multiple_model',
     'django_filters',
     'rest_framework',
     'serializer_demo.apps.SerializerDemoConfig',
