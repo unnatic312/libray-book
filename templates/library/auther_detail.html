@@ -1,0 +1,18 @@
+{% extends 'library/base.html' %}
+{% block content %}
+<div class="detail" >
+	<div class="detail_obj">
+	    <ul><strong><h2> {{ auther }}</h2> </strong></ul>
+	    <li> {{auther.bio}} </li>
+	</div>
+	<div class="detail_obj">
+		<h2> {{auther}}' Books Available </h2>
+	    {% for book in book_list %}
+    	<ul> {{book.name}} </ul>
+    	<br>
+    	{% endfor %}
+	</div>
+
+</div>
+        <a href="{% url 'index' %}" >  Go Back  </a>
+{% endblock %}

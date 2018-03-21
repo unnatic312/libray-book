@@ -1,12 +1,11 @@
-from django.shortcuts import render_to_response,render
-from django.http import Http404
+from django.shortcuts import render, reverse
+from django.contrib.auth import logout
+from django.http import Http404,HttpResponseRedirect
 from django.views import View
 
 from .models import Books, Auther, Publication, BookReview
 from .form import BookReviewForm
 # Create your views here.
-
-
 
 class Index(View):
     books_list = Books.objects.order_by('name')
@@ -14,42 +13,48 @@ class Index(View):
     publication_list = Publication.objects.order_by("name")
 
     def get(self,request):
-        form = BookReviewForm()
-        reviews = BookReview.objects.order_by('-date_on')
-        return render(request,"library\index1.html",
+       return render(request,"library\index1.html",
             context= {
                 'books':self.books_list,
                 'authers':self.authers,
                 'publication_list':self.publication_list,
-                'reviews':reviews,
-                'form':form,
-            })
+                })
 
     def post(self,request):
-        reviews = BookReview.objects.order_by('-date_on')
-        form = BookReviewForm(request.POST)
-        if form.is_valid():
-            form.save()
         return render(request, "library\index1.html",
             context={
                 'books': self.books_list,
                 'authers': self.authers,
                 'publication_list': self.publication_list,
-                'reviews': reviews,
-                'form': form,
             })
 
 class BookDetail(View):
+    form = BookReviewForm()
 
     def get(self,request,book_name):
-        try:
-            name = book_name.replace('_',' ')
+            try:
+                form = BookReviewForm()
+                name = book_name.replace('_',' ')
+                book = Books.objects.get(name=name)
+                reviews = BookReview.objects.filter(book=book)[:5]
+                context = {"book": book,
+                           'reviews': reviews,
+                           'form': form, }
+            except Books.DoesNotExist:
+                raise Http404('Books Does not exist')
+            return render(request,"library\\book_detail.html", context )
+
+    def post(self,request,book_name):
+            form = BookReviewForm(request.POST)
+            if form.is_valid():
+                form.save()
+            name = book_name.replace('_', ' ')
             book = Books.objects.get(name=name)
-
-        except Books.DoesNotExist:
-            raise Http404('Books Does not exist')
-
-        return render_to_response("library\\book_detail.html", context= {"book":book })
+            reviews = BookReview.objects.filter(book=book)[:5]
+            context = {"book": book,
+                       'reviews': reviews,
+                       'form': self.form, }
+            return render(request,"library\\book_detail.html", context)
 
 class AutherDetail(View):
 
@@ -64,3 +69,6 @@ class AutherDetail(View):
 
         return render(request,"library\\auther_detail.html", context= {"book_list":book_list,"auther":auther_a })
 
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))

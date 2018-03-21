@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import login,login_required
 from django.urls import path,include
-from library.views import Index
+from library.views import Index,logout_view
 from library import urls
 from library.views import AutherDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',login,{'template_name':'library/login.html'},name='login'),
+    path('logout/',logout_view,name='logout'),
     path('index/', login_required(Index.as_view()), name='index'),
     path('book/',include(urls)),
     path('auther/<slug:auther_name>/', login_required(AutherDetail.as_view()), name='auther_detail'),

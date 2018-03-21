@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'myproj1.urls'
+ROOT_URLCONF = 'booklibrary.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myproj1.wsgi.application'
+WSGI_APPLICATION = 'booklibrary.wsgi.application'
 
 
 # Database
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -121,11 +121,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    '/myproj1/static/',
+    '/booklibrary/static/',
 ]
 
 # As using Django Authentication sytem
 # Overrides default path to our path
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
-LOGIN_URL = 'library/login.html'
+
+LOGOUT_URL = 'logout'

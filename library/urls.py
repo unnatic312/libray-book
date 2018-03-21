@@ -16,7 +16,8 @@ Including another URLconf
 
 from django.urls import path
 from library.views import BookDetail
+from django.contrib.auth.views import login_required
 
 urlpatterns = [
-    path('<slug:book_name>/', BookDetail.as_view(), name='book_detail'),
+    path('<slug:book_name>/', login_required(BookDetail.as_view()), name='book_detail'),
    ]

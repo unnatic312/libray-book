@@ -2,22 +2,45 @@
 {% extends 'library/base.html' %}
 {% block content %}
     <div class="detail">
-        <div class="detail_obj">
+
+    <div class="detail_obj">
             <h2>{{ book.name }}</h2>
         <li><strong> Book Title   :</strong>   {{ book.name }}. <br></li>
         <li><strong> Written By   :</strong>   {{ book.auther }}. <br></li>
         <li><strong> Book Published_on   :</strong>   {{ book.published_on }}. <br></li>
-        </div>
-        <div class="detail_obj">
-            <strong> Publications   :</strong>
-                <ul>
-                {% for publication in book.publication.all%}
-                <li> {{publication.name}} </li>
-                {% endfor %}
-                </ul>
-        </div>
+
+
+        <form  method="post" accept-charset="utf-8">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" style="align: centre;">
+        </form>
     </div>
-   
+
+    <div class="detail_obj">
+        <strong> Publications   :</strong>
+            <ul>
+            {% for publication in book.publication.all%}
+                <li> {{publication.name}} </li>
+            {% endfor %}
+            </ul>
+    </div>
+
+    <div class="detail_obj">
+        <h2> Latest Book Reviews </h2>
+        {% if reviews %}
+        {% for review in reviews %}
+            <li> <strong>Review : </strong> {{ review.book_review }} </li>
+            <ul><strong> For Book : </strong> {{ review.book.name }}</ul>
+            <ul> @ {{ review.date_on }}</ul>
+        {% endfor %}
+        {% else %}
+             <p> No reviews to Display </p>
+        {% endif %}
+
+        </div>
+
+    </div>
     
         <a href="{% url 'index' %}" >  Go Back  </a>
 {% endblock %}

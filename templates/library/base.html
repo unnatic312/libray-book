@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% load static %}
+    <meta charset="UTF-8">
+    <title>Base_html</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'library/style.css' %}"/>
+</head>
+<body  id="base_body">
+
+    <block style="float:right">
+        <strong> Welcome {{ user }} </strong>
+
+        <form method="get" action="{% url 'logout' %}">
+            <input type="submit" value="Logout">
+        </form>
+    </block>
+
+    <header>
+
+         <h1><strong> Book Library </strong></h1>
+    </header>
+
+    <div id="base_content">
+    	{% block content %}
+    	{% endblock %}
+    </div>
+
+</body>
+</html>

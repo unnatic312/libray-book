@@ -33,31 +33,10 @@
             {% endif %}
         </div>
 
-        <div class="detail_obj">
-
-            <h2> Latest Book Reviews </h2>
-            {% if reviews %}
-                {% for review in reviews %}
-                    <li> <strong>Review : </strong> {{ review.book_review }} </li>
-                    <ul><strong> For Book : </strong> {{ review.book.name }}</ul>
-                    <ul> @ {{ review.date_on }}</ul>
-
-                    </ul>
-                {% endfor %}
-            {% else %}
-                <p> No reviews to Display </p>
-            {% endif %}
-
-        </div>
 
     </div>
     <hr>
 
-    <form  method="post" accept-charset="utf-8">
-        {% csrf_token %}
-        {{ form.as_table }}
-        <input type="submit" value="Submit">
-    </form>
 
 
 {% endblock %}
