@@ -6,17 +6,16 @@ from . import models
 
 connections.create_connection()
 
+
 class ProductIndex(DocType):
     name = Text()
     price = Float()
     creator = Text()
     description = Text()
 
-    class Meta:
-        index='product-index'
-
 
 def bulk_indexing():
+
     ProductIndex.init()
     es = Elasticsearch()
     bulk(
