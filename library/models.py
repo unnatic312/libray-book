@@ -44,7 +44,9 @@ class BookReview(models.Model):
     date_on = models.DateTimeField(auto_now=True, null=True)
     book = models.ForeignKey(Books, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ('-date_on',)
 
     def __str__(self):
-        return (self.book.name)
+        return self.book.name
 
